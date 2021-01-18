@@ -32,7 +32,7 @@ def load_image(image_file):
 
 def main():
     st.title("File Upload")
-    menu = ["Image", "Dataset", "DocumentFiles", "Json", "About"]
+    menu = ["Image", "Dataset", "DocumentFiles", "About"]
     choice = st.sidebar.selectbox("Menu", menu)
 
     if choice == "Image":
@@ -73,6 +73,7 @@ def main():
                     a = df.dtypes
                     st.write("Data Type", a)
                     st.write("Celulas Vazias", n)
+                    st.write('Data Dimension: ' + str(df.shape[0]) + ' rows and ' + str(df.shape[1]) + ' columns.')
                     st.table(df)
 
     elif choice == "DocumentFiles":
