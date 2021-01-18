@@ -32,11 +32,11 @@ def load_image(image_file):
 
 def main():
     st.title("File Upload")
-    menu = ["Home", "Dataset", "DocumentFiles", "Json", "About"]
+    menu = ["Image", "Dataset", "DocumentFiles", "Json", "About"]
     choice = st.sidebar.selectbox("Menu", menu)
 
-    if choice == "Home":
-        st.subheader("Home")
+    if choice == "Image":
+        st.subheader("Image")
         image_file = st.file_uploader("Upload Image", type=['png', 'jpeg', 'jpg'])
         if image_file is not None:
             file_details = {"Filename": image_file.name, "FileType": image_file.type, "FileSize": image_file.size}
@@ -57,23 +57,23 @@ def main():
 
                 try:
                     df = pd.read_csv(data_file)
-                    # st.dataframe(df)
-                    st.table(df)
+                    n = df.isnull().sum()
+                    # df = df.convert_dtypes()
+                    a = df.dtypes
+                    st.write("Data Type", a)
+                    st.write("Celulas Vazias", n)
+                    st.write('Data Dimension: ' + str(df.shape[0]) + ' rows and ' + str(df.shape[1]) + ' columns.')
+                    st.dataframe(df)
+
                 except Exception as e:
                     print(e)
                     df = pd.read_excel(data_file)
                     # st.dataframe(df)
+                    n = df.isnull().sum()
+                    a = df.dtypes
+                    st.write("Data Type", a)
+                    st.write("Celulas Vazias", n)
                     st.table(df)
-
-    elif choice == "Json":
-        st.subheader("json")
-        data_file = st.file_uploader("Upload file Json", type=['json'])
-        if st.button("Process"):
-            if data_file is not None:
-                file_details = {"Filename": data_file.name, "FileType": data_file.type, "FileSize": data_file.size}
-                st.write(file_details)
-                df = pd.read_json(data_file)
-                st.write(df)
 
     elif choice == "DocumentFiles":
         st.subheader("DocumentFiles")
